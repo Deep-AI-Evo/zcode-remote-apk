@@ -40,6 +40,7 @@ This app wraps that into a small Android client: **record the remote link once (
 - 📋 **粘贴导入**：也支持直接粘贴链接
 - 💾 **连接管理**：卡片列表保存多条连接；长按可复制链接 / 删除（带确认）
 - 🧭 **WebView 增强**：返回键按页面历史回退、刷新按钮、系统浏览器打开、更换链接；加载失败有明确提示
+- 🔔 **后台提醒**：远程页出现「任务已完成」或「需要你确认」时，前台弹提示条、后台发本地通知，点击通知直接回到连接页
 - 🔒 **纯本地**：连接数据存 SharedPreferences，无账号、无云同步、不依赖 Google 服务（国内可用）
 
 - 📱 **One-tap connect**: tap a saved link and you're in — the official remote page runs inside an in-app WebView (JavaScript/DOM storage enabled, mobile-viewport aware)
@@ -47,6 +48,7 @@ This app wraps that into a small Android client: **record the remote link once (
 - 📋 **Paste import**: paste the link directly
 - 💾 **Connection manager**: keep multiple connections as cards; long-press to copy the link or delete (with confirmation)
 - 🧭 **WebView niceties**: hardware back walks page history, toolbar refresh, open-in-system-browser, change-link; clear error toast on load failure
+- 🔔 **Background alerts**: when the remote page shows "task completed" or "action required", show a snackbar in the foreground or a local notification in the background; tapping the notification returns to the connect page
 - 🔒 **Fully local**: connections live in SharedPreferences — no account, no cloud sync, no Google Play Services dependency
 
 ## 截图 / Screenshots
