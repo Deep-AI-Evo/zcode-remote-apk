@@ -4,7 +4,22 @@
 >
 > An Android wrapper for ZCode's built-in "Phone Connect" remote feature — **save the link once, connect with one tap**, no more scanning a QR code at your desktop every time.
 
+[![Release](https://img.shields.io/badge/Release-v1.0.0-blue)](https://github.com/Deep-AI-Evo/zcode-remote-apk/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+---
+
+## 立即下载 / Download
+
+**👉 安装包在这里：** [前往 Releases 下载最新版 APK](https://github.com/Deep-AI-Evo/zcode-remote-apk/releases/latest)
+
+- APK 即装即用，**不需要自己构建**。
+- 下载后安装到安卓手机，允许「未知来源」即可。
+- 打开 App → 电脑端 ZCode 点「手机连接」→ 在 App 里**扫码**或**粘贴**链接 → 一键连接（详见下方 [使用](#使用--usage)）。
+
+For most users there is no need to build it yourself — grab the signed APK from
+[Releases](https://github.com/Deep-AI-Evo/zcode-remote-apk/releases/latest), install it on your
+Android phone (allow unknown sources), import the link once, and connect with one tap.
 
 ---
 
@@ -64,7 +79,12 @@ ZCode's mobile link is a cloud-relay web page: the QR/copy link points to `https
 
 ZCode 的手机连接本质是一个走智谱云 relay 的网页：二维码/复制链接指向 `https://zcode.z.ai`（或 `zcode.chatglm.site`）的 `/remote/v3|v4/...`，通过 relay（`wss://…/ws`）把桌面端与手机配对。手机端只是一个网页——App 内 WebView 直接加载它即可，包装层不需要自己实现任何协议。
 
-## 构建 / Build
+## 自己构建 / Build (可选)
+
+> 一般用户不需要自己构建，直接用 [Releases 里的 APK](#立即下载--download) 即可。以下为开发者参考。
+
+For end users there is no need to build — just install the APK from
+[Releases](#立即下载--download). The following is for developers.
 
 - JDK 17（`JAVA_HOME` 指向 JDK 17）
 - Android SDK：compileSdk 35 / targetSdk 35 / minSdk 26（`local.properties` 里按本机配置 `sdk.dir`）
@@ -99,7 +119,7 @@ app/src/main/java/com/zcode/remote/
 
 ## 路线图 / Roadmap
 
-- [x] Release 签名包 / Signed release builds（v1.0.0，见 [Releases](../../releases)）
+- [x] Release 签名包 / Signed release builds（v1.0.0）
 - [ ] **真·免扫码 / True QR-free**：Mac 常驻小助手自动获取最新远程链接，App 打开即连（需要 ZCode 提供可编程取链接通道，待验证）
 - [ ] 更多连接字段（备注名、图标）/ Richer connection profiles
 
