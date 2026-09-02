@@ -112,3 +112,7 @@ This is an unofficial third-party client. It merely wraps the official "Phone Co
 ## 许可证 / License
 
 [MIT](LICENSE)
+
+---
+
+**壹我AI** 制作 · Made by 壹我AI
