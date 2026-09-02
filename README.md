@@ -9,6 +9,16 @@
 
 ---
 
+> ⚠️ **第三方非官方版本**：本应用与智谱 / ZCode 官方**无任何关系**，只是把官方「手机连接」网页封装成安卓 App，不改动任何官方协议和鉴权。
+>
+> 🔒 **权限极少**：全应用仅申请「网络」（加载远程页面）和「相机」（扫码添加链接）两类权限。**无账号、无定位、无通讯录、无存储访问、无后台常驻**。
+
+> ⚠️ **Unofficial third-party build**: not affiliated with Zhipu AI / ZCode in any way. It only wraps the official "Phone Connect" web page into an Android app and does not modify any official protocol or authentication.
+>
+> 🔒 **Minimal permissions**: the app requests only two permission types — Network (to load the remote page) and Camera (to scan the QR link). **No account, no location, no contacts, no storage access, no background services.**
+
+---
+
 ## 立即下载 / Download
 
 **👉 安装包在这里：** [前往 Releases 下载最新版 APK](https://github.com/Deep-AI-Evo/zcode-remote-apk/releases/latest)
@@ -48,6 +58,22 @@ This app wraps that into a small Android client: **record the remote link once (
 - 💾 **Connection manager**: keep multiple connections as cards; long-press to copy the link or delete (with confirmation)
 - 🧭 **WebView niceties**: hardware back walks page history, toolbar refresh, open-in-system-browser, change-link; clear error toast on load failure
 - 🔒 **Fully local**: connections live in SharedPreferences — no account, no cloud sync, no Google Play Services dependency
+
+## 权限说明 / Permissions
+
+隐私透明：下表是本应用申请的**全部**权限，没有其他任何权限。
+
+Privacy first — the table below is the **complete** list of permissions this app requests, nothing else.
+
+| 权限 Permission | 用途 Purpose | 敏感 Sensitive |
+| --- | --- | --- |
+| 网络 INTERNET | 加载远程连接页面 Load the remote page | 否 No |
+| 使用相机 CAMERA | 扫码录入链接，仅扫码时使用 Scan the QR link, used only while scanning | 否（拒绝后仍可粘贴链接）No (paste still works if denied) |
+| 查看网络状态 ACCESS_NETWORK_STATE | 网络状态检测 Network state | 否 No |
+
+**没有申请 / Not requested**：账号登录、定位、通讯录、相册/存储、麦克风、短信、通话、后台常驻、开机自启。所有连接数据仅保存在本机。
+
+No account login, no location, no contacts, no photos/storage, no microphone, no SMS, no calls, no background services, no boot autostart. All connection data stays on your device.
 
 ## 截图 / Screenshots
 
