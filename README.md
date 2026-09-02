@@ -89,25 +89,49 @@ No account login, no location, no contacts, no photos/storage, no microphone, no
 >
 > The connect screenshot shows the official site loaded with a sample link (`https://zcode.z.ai`); once you import a real "Phone Connect" link, the in-app page is the actual remote-control UI.
 
-## 使用 / Usage
+## 使用教程 / Usage
 
-1. 电脑端 ZCode 打开「手机连接」，得到二维码 / 复制链接；
-2. 手机安装 APK，点右下角 **＋**，**扫码**或**粘贴**录入链接（可录多条）；
+### 第 1 步：在电脑端 ZCode 获取连接二维码 / Get the QR code on desktop
+
+依据 [ZCode 官方文档 · Remote Control](https://zcode.z.ai/cn/docs/remote-control)（图文来源：智谱官方）。
+
+**① 打开入口**：在 ZCode 桌面端**左下角侧栏**，点击**手机图标**（在"连接使用"右侧、设置齿轮旁边），打开「**移动端远程控制**」弹窗。
+
+![ZCode 左下角手机图标入口（来源：ZCode 官方文档）](docs/screenshots/official-rc-entry.webp)
+
+**② 获取二维码 / 链接**：弹窗**左侧**就是「手机扫码连接」区域——一个大二维码，下方有「**复制链接**」「**刷新二维码**」按钮（弹窗右侧是 Bot Channel 入口，微信/飞书/Telegram 长期接入，与本 App 无关，可忽略）。
+
+![移动端远程控制弹窗（来源：ZCode 官方文档）](docs/screenshots/official-rc-dialog.webp)
+
+**③ 官方注意事项**（与本 App 使用直接相关）：
+
+- 🔑 连接地址自带远控授权，**等同临时钥匙，不要公开或转发**
+- ♻️ 点「刷新二维码」后**旧地址立即失效**——这就是本 App 里"链接过期"的原因，失效时回添加页重新扫码/粘贴即可
+- 📱 **同一时间只支持一个手机页面**连接，换设备前先关掉旧页面
+- ⏹️ **关闭弹窗 ≠ 断开**，用完要点弹窗右上角的「**停止**」按钮
+
+### 第 2 步：把链接录入本 App / Import into this app
+
+1. 手机安装本 App，点右下角 **＋**；
+2. 对着电脑屏幕**扫码**，或点弹窗里「复制链接」后在 App 里**粘贴**（可录多条连接）；
 3. 回到首页点卡片 → 一键进入远程页面。
 
-> **注意 / Note**：ZCode 的远程链接与当前桌面会话绑定，**电脑端每次重新生成后旧链接失效**，且 relay 配对同一时间只支持一个手机页面。失效时回添加页重新扫码/粘贴即可。
+### 手机端能做什么 / What you can do on the phone
 
-1. On the desktop, open ZCode → "Phone Connect" to reveal the QR code / copyable link.
-2. Install the APK on your phone and tap the **＋** FAB — **scan** or **paste** the link (multiple connections supported).
-3. Back on home, tap a card → you're in the remote page.
+官方远程页面提供（与本 App 内看到的一致）：
 
-> **Note**: the link is bound to the live desktop session — **it is invalidated whenever the desktop regenerates it**, and a relay pair supports only one phone page at a time. If it expires, re-import it from the add screen.
+- **任务首页**：按工作区/时间线组织任务、新建任务、对断开的远程工作区发起重连、查看运行状态
+- **会话页**：实时查看 Agent 回复与执行进度、补充需求让 Agent 继续、点赞/点踩反馈、会话分叉
+- 命令始终在桌面端工作区连接的机器上执行（本地电脑 / SSH 主机 / WSL / Docker）
+
+1. Install the APK and tap the **＋** FAB — scan the QR on the desktop screen or paste the copied link.
+2. Back on home, tap a card → you're in the remote page.
 
 ## 原理 / How it works
 
 ZCode's mobile link is a cloud-relay web page: the QR/copy link points to `https://zcode.z.ai` (or `zcode.chatglm.site`) `/remote/v3|v4/...`, pairing the desktop with your phone over Zhipu's relay (`wss://…/ws`). The phone side is just a web page, which is exactly what the in-app WebView loads — so the wrapper needs no protocol work of its own.
 
-ZCode 的手机连接本质是一个走智谱云 relay 的网页：二维码/复制链接指向 `https://zcode.z.ai`（或 `zcode.chatglm.site`）的 `/remote/v3|v4/...`，通过 relay（`wss://…/ws`）把桌面端与手机配对。手机端只是一个网页——App 内 WebView 直接加载它即可，包装层不需要自己实现任何协议。
+ZCode 的手机连接本质是一个走智谱云 relay 的网页：二维码/复制链接指向 `https://zcode.z.ai`（或 `zcode.chatglm.site`）的 `/remote/v3|v4/...`，通过 relay（`wss://…/ws`）把桌面端与手机配对。手机端只是一个网页——App 内 WebView 直接加载它即可，包装层不需要自己实现任何协议。该机制与 [ZCode 官方文档](https://zcode.z.ai/cn/docs/remote-control) 描述一致。
 
 ## 自己构建 / Build (可选)
 
