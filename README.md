@@ -1,8 +1,8 @@
-# ZCode 远程 (ZCode Remote)
+# ZCode 远程手机平板连接控制
 
-> 把 ZCode 桌面端的「手机连接」远程功能封装成安卓 App，**保存链接、一键连接**，不用每次到电脑前扫码。
+> 把 ZCode 桌面端的「手机连接」远程功能封装成安卓 App，**手机、平板都能用**：保存链接、一键连接，不用每次到电脑前扫码。
 >
-> An Android wrapper for ZCode's built-in "Phone Connect" remote feature — **save the link once, connect with one tap**, no more scanning a QR code at your desktop every time.
+> Control your ZCode workspace from your **phone or tablet** — save the link once, connect with one tap, no more scanning a QR code at your desktop every time.
 
 [![Release](https://img.shields.io/badge/Release-v1.0.0-blue)](https://github.com/Deep-AI-Evo/zcode-remote-apk/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
