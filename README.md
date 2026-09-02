@@ -4,7 +4,7 @@
 >
 > Control your ZCode workspace from your **phone or tablet** — save the link once, connect with one tap, no more scanning a QR code at your desktop every time.
 
-[![Release](https://img.shields.io/badge/Release-v1.0.0-blue)](https://github.com/Deep-AI-Evo/zcode-remote-apk/releases/latest)
+[![Release](https://img.shields.io/github/v/release/Deep-AI-Evo/zcode-remote-apk?label=Release&color=000000)](https://github.com/Deep-AI-Evo/zcode-remote-apk/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---

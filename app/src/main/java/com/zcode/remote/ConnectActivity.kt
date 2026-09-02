@@ -57,8 +57,9 @@ class ConnectActivity : AppCompatActivity() {
                 if (webView.canGoBack()) {
                     webView.goBack()
                 } else {
-                    isEnabled = false
-                    onBackPressedDispatcher.onBackPressed()
+                    // 保持当前连接画面：按返回只是退到后台，回来还在远程页；
+                    // 想退出连接请点左上角返回箭头。
+                    moveTaskToBack(true)
                 }
             }
         })

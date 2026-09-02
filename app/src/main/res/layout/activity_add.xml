@@ -32,7 +32,7 @@
                 app:cardBackgroundColor="@color/surface"
                 app:cardCornerRadius="14dp"
                 app:cardElevation="0dp"
-                app:strokeColor="#E5E7EB"
+                app:strokeColor="@color/outline"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -104,8 +104,8 @@
                 app:icon="@drawable/ic_qr"
                 app:iconGravity="textStart"
                 app:iconPadding="8dp"
-                app:strokeColor="@color/primary"
-                app:iconTint="@color/primary" />
+                app:strokeColor="@color/on_surface"
+                app:iconTint="@color/on_surface" />
 
             <TextView
                 android:layout_width="match_parent"

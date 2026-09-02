@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ZCode 远程</string>
-    <string name="main_empty">还没有连接\n点右下角 ＋ 添加第一个连接</string>
+    <string name="main_empty">扫码连接 ZCode 远程工作区\n点右下角 ＋ 添加连接</string>
     <string name="fab_add">添加连接</string>
     <string name="add_title">添加连接</string>
     <string name="add_hint">在电脑端 ZCode 打开「手机连接」，把二维码里的链接复制或扫进来，之后一键连。</string>
