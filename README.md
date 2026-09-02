@@ -75,6 +75,10 @@ Privacy first — the table below is the **complete** list of permissions this a
 
 No account login, no location, no contacts, no photos/storage, no microphone, no SMS, no calls, no background services, no boot autostart. All connection data stays on your device.
 
+> 网页里的**图片/文件上传**已支持：走系统文件选择器（Android 存储访问框架），选图过程不需要也不申请存储类权限。
+>
+> File/image uploads inside the remote page work through the system file picker (Android Storage Access Framework) — no storage permission is needed.
+
 ## 截图 / Screenshots
 
 | 首页空态 / Empty home | WebView 连接页 / Connect view |

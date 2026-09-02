@@ -25,6 +25,7 @@
     <string name="deleted">已删除：%1$s</string>
     <string name="scan_prompt">对准电脑屏幕上 ZCode 的二维码</string>
     <string name="load_failed">页面加载失败：网络异常或链接已失效，可点刷新；也可返回更换链接</string>
+    <string name="file_chooser_error">无法打开文件选择器，请重试</string>
     <string name="connect_loading">连接中…</string>
     <string name="confirm_delete">删除这条连接？</string>
     <string name="cancel">取消</string>

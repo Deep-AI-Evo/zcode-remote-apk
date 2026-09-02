@@ -6,6 +6,8 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.webkit.ValueCallback
+import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
@@ -22,15 +24,11 @@ import com.google.android.material.snackbar.Snackbar
 
 class ConnectActivity : AppCompatActivity() {
 
-    companion object {
-        const val EXTRA_ID = "extra_connection_id"
-        const val KEY_COLLAPSED = "collapsed"
-    }
-
     private lateinit var webView: WebView
     private lateinit var progress: ProgressBar
     private lateinit var store: ConnectionsStore
     private var url: String = ""
+    private var filePathCallback: ValueCallback<Array<Uri>>? = null
 
     // 浮动工具条（固定顶部中间，可收起）
     private lateinit var floatBar: LinearLayout
@@ -79,6 +77,31 @@ class ConnectActivity : AppCompatActivity() {
         settings.displayZoomControls = false
         settings.mediaPlaybackRequiresUserGesture = false
         settings.cacheMode = WebSettings.LOAD_DEFAULT
+
+        webView.webChromeClient = object : WebChromeClient() {
+            // 远程页里的 <input type=file>（上传图片/文件）：接系统文件选择器（SAF），无需存储权限
+            override fun onShowFileChooser(
+                view: WebView?,
+                filePathCallback: ValueCallback<Array<Uri>>?,
+                fileChooserParams: FileChooserParams?
+            ): Boolean {
+                this@ConnectActivity.filePathCallback?.onReceiveValue(null)
+                this@ConnectActivity.filePathCallback = filePathCallback
+                val intent = fileChooserParams?.createIntent()
+                    ?: Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                        type = "*/*"
+                        addCategory(Intent.CATEGORY_OPENABLE)
+                    }
+                return try {
+                    startActivityForResult(intent, REQ_FILE_CHOOSER)
+                    true
+                } catch (e: Exception) {
+                    this@ConnectActivity.filePathCallback = null
+                    Snackbar.make(webView, R.string.file_chooser_error, Snackbar.LENGTH_SHORT).show()
+                    false
+                }
+            }
+        }
 
         webView.webViewClient = object : WebViewClient() {
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
@@ -189,6 +212,24 @@ class ConnectActivity : AppCompatActivity() {
         }
     }
 
+    // ---------- 文件上传（网页 <input type=file>） ----------
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQ_FILE_CHOOSER) {
+            val callback = filePathCallback
+            filePathCallback = null
+            if (callback != null) {
+                val result = if (resultCode == RESULT_OK && data != null) {
+                    val uri = data.data
+                    if (uri != null) arrayOf(uri) else null
+                } else null
+                callback.onReceiveValue(result)
+            }
+            return
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
     /** 切后台暂停渲染省电；返回时恢复。 */
     override fun onPause() {
         super.onPause()
@@ -201,7 +242,15 @@ class ConnectActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        filePathCallback?.onReceiveValue(null)
+        filePathCallback = null
         webView.destroy()
         super.onDestroy()
+    }
+
+    companion object {
+        const val EXTRA_ID = "extra_connection_id"
+        const val KEY_COLLAPSED = "collapsed"
+        private const val REQ_FILE_CHOOSER = 701
     }
 }
