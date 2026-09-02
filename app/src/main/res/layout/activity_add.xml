@@ -9,11 +9,12 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="28dp"
         android:background="@color/primary"
-        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIcon="@drawable/ic_arrow_back_small"
         app:navigationIconTint="@color/on_primary"
         app:title="@string/add_title"
+        app:titleTextAppearance="@style/ZCodeToolbarTitle"
         app:titleTextColor="@color/on_primary" />
 
     <ScrollView

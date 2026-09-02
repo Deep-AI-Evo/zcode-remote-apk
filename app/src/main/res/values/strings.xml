@@ -13,6 +13,10 @@
     <string name="err_invalid_link">链接格式不正确，应以 http(s):// 开头</string>
     <string name="saved_ok">已保存连接</string>
     <string name="menu_refresh">刷新</string>
+    <string name="menu_more">更多</string>
+    <string name="menu_collapse">收起工具条</string>
+    <string name="menu_expand">展开工具条</string>
+    <string name="add_back">返回</string>
     <string name="menu_open_browser">在浏览器打开</string>
     <string name="menu_change_link">更换链接</string>
     <string name="menu_copy_link">复制链接</string>

@@ -15,4 +15,9 @@
         <item name="colorOutline">@color/outline</item>
         <item name="android:statusBarColor">@color/primary</item>
     </style>
+
+    <!-- 顶部工具栏标题：细条工具栏（28dp）配套的小字号 -->
+    <style name="ZCodeToolbarTitle" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textSize">13sp</item>
+    </style>
 </resources>

@@ -5,31 +5,36 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.FrameLayout
+import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.button.MaterialButton
+import androidx.appcompat.widget.PopupMenu
 import com.google.android.material.snackbar.Snackbar
 
 class ConnectActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_ID = "extra_connection_id"
+        const val KEY_COLLAPSED = "collapsed"
     }
 
     private lateinit var webView: WebView
     private lateinit var progress: ProgressBar
     private lateinit var store: ConnectionsStore
     private var url: String = ""
+
+    // 浮动工具条（固定顶部中间，可收起）
+    private lateinit var floatBar: LinearLayout
+    private lateinit var miniFab: FrameLayout
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,23 +52,13 @@ class ConnectActivity : AppCompatActivity() {
         url = conn.url
         store.saveLastConnection(conn.id)
 
-        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        toolbar.title = conn.name
-        setSupportActionBar(toolbar)
-        // 注意：必须在 setSupportActionBar 之后设置，否则会被内部监听覆盖
-        toolbar.setNavigationOnClickListener { exitToMain() }
-
-        findViewById<MaterialButton>(R.id.btn_refresh).setOnClickListener {
-            webView.reload()
-        }
-
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (webView.canGoBack()) {
                     webView.goBack()
                 } else {
                     // 保持当前连接画面：按返回只是退到后台，回来还在远程页；
-                    // 想退出连接请点左上角返回箭头。
+                    // 想退出连接请点工具条上的返回按钮。
                     moveTaskToBack(true)
                 }
             }
@@ -71,6 +66,8 @@ class ConnectActivity : AppCompatActivity() {
 
         progress = findViewById(R.id.progress)
         webView = findViewById(R.id.web_view)
+        floatBar = findViewById(R.id.float_bar)
+        miniFab = findViewById(R.id.mini_fab)
 
         val settings = webView.settings
         settings.javaScriptEnabled = true
@@ -114,6 +111,8 @@ class ConnectActivity : AppCompatActivity() {
             }
         }
 
+        setupFloatBar()
+
         webView.loadUrl(url)
     }
 
@@ -135,10 +134,59 @@ class ConnectActivity : AppCompatActivity() {
         finish()
     }
 
-    /** setSupportActionBar 下导航按钮的官方回调路径，双保险。 */
-    override fun onSupportNavigateUp(): Boolean {
-        exitToMain()
-        return true
+    // ---------- 顶部浮动工具条（固定居中，可收起） ----------
+
+    private fun setupFloatBar() {
+        findViewById<ImageButton>(R.id.btn_back).setOnClickListener { exitToMain() }
+        findViewById<ImageButton>(R.id.btn_refresh).setOnClickListener { webView.reload() }
+        findViewById<ImageButton>(R.id.btn_more).setOnClickListener { anchor -> showFloatMenu(anchor) }
+        findViewById<ImageButton>(R.id.btn_collapse).setOnClickListener {
+            floatBar.visibility = View.GONE
+            miniFab.visibility = View.VISIBLE
+            prefs().edit().putBoolean(KEY_COLLAPSED, true).apply()
+        }
+        findViewById<ImageButton>(R.id.btn_expand).setOnClickListener {
+            miniFab.visibility = View.GONE
+            floatBar.visibility = View.VISIBLE
+            prefs().edit().putBoolean(KEY_COLLAPSED, false).apply()
+        }
+
+        if (prefs().getBoolean(KEY_COLLAPSED, false)) {
+            floatBar.visibility = View.GONE
+            miniFab.visibility = View.VISIBLE
+        }
+    }
+
+    private fun showFloatMenu(anchor: View) {
+        PopupMenu(this, anchor).apply {
+            menuInflater.inflate(R.menu.connect_menu, menu)
+            setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.action_open_browser -> {
+                        openInSystemBrowser()
+                        true
+                    }
+                    R.id.action_change_link -> {
+                        store.saveLastConnection(null)
+                        startActivity(Intent(this@ConnectActivity, AddLinkActivity::class.java))
+                        finish()
+                        true
+                    }
+                    else -> false
+                }
+            }
+            show()
+        }
+    }
+
+    private fun prefs() = getSharedPreferences("zcode_remote_ui", MODE_PRIVATE)
+
+    private fun openInSystemBrowser() {
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        } catch (e: Exception) {
+            Snackbar.make(webView, R.string.load_failed, Snackbar.LENGTH_SHORT).show()
+        }
     }
 
     /** 切后台暂停渲染省电；返回时恢复。 */
@@ -150,33 +198,6 @@ class ConnectActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         webView.onResume()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.connect_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.action_open_browser -> {
-            openInSystemBrowser()
-            true
-        }
-        R.id.action_change_link -> {
-            store.saveLastConnection(null)
-            startActivity(Intent(this, AddLinkActivity::class.java))
-            finish()
-            true
-        }
-        else -> super.onOptionsItemSelected(item)
-    }
-
-    private fun openInSystemBrowser() {
-        try {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-        } catch (e: Exception) {
-            Snackbar.make(webView, R.string.load_failed, Snackbar.LENGTH_SHORT).show()
-        }
     }
 
     override fun onDestroy() {
