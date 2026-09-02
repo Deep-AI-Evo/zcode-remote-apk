@@ -30,6 +30,7 @@ class AddLinkActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
         store = ConnectionsStore(this)
+        InsetsHelper.apply(findViewById(R.id.root), handleIme = true)
         linkInput = findViewById(R.id.link_input)
 
         findViewById<MaterialToolbar>(R.id.toolbar).setNavigationOnClickListener { finish() }

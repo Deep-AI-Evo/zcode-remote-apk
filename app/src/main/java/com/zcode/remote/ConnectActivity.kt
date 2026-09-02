@@ -36,6 +36,7 @@ class ConnectActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_connect)
         store = ConnectionsStore(this)
+        InsetsHelper.apply(findViewById(R.id.root), handleIme = true)
 
         val connectionId = intent.getStringExtra(EXTRA_ID)
         val conn = connectionId?.let { store.get(it) }
@@ -132,6 +133,12 @@ class ConnectActivity : AppCompatActivity() {
     private fun exitToMain() {
         store.saveLastConnection(null)
         finish()
+    }
+
+    /** setSupportActionBar 下导航按钮的官方回调路径，双保险。 */
+    override fun onSupportNavigateUp(): Boolean {
+        exitToMain()
+        return true
     }
 
     /** 切后台暂停渲染省电；返回时恢复。 */
