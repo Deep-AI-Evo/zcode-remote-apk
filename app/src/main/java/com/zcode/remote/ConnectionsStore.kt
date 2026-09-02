@@ -39,6 +39,16 @@ class ConnectionsStore(context: Context) {
 
     fun get(id: String): Connection? = list().firstOrNull { it.id == id }
 
+    /**
+     * 记住"最后活动"的连接：App 重启后自动回到连接页。
+     * 用户主动退出连接（左上角箭头）时清除。
+     */
+    fun saveLastConnection(id: String?) {
+        prefs.edit().putString(KEY_LAST, id).apply()
+    }
+
+    fun lastConnectionId(): String? = prefs.getString(KEY_LAST, null)
+
     fun add(name: String, url: String): Connection {
         val conn = Connection(UUID.randomUUID().toString(), name, url, System.currentTimeMillis())
         save(list() + conn)
@@ -69,5 +79,6 @@ class ConnectionsStore(context: Context) {
 
     private companion object {
         const val KEY_LIST = "list"
+        const val KEY_LAST = "last_connection"
     }
 }

@@ -28,25 +28,29 @@ class ConnectActivity : AppCompatActivity() {
 
     private lateinit var webView: WebView
     private lateinit var progress: ProgressBar
+    private lateinit var store: ConnectionsStore
     private var url: String = ""
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_connect)
+        store = ConnectionsStore(this)
 
         val connectionId = intent.getStringExtra(EXTRA_ID)
-        val conn = connectionId?.let { ConnectionsStore(this).get(it) }
+        val conn = connectionId?.let { store.get(it) }
         if (conn == null) {
             finish()
             return
         }
         url = conn.url
+        store.saveLastConnection(conn.id)
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         toolbar.title = conn.name
-        toolbar.setNavigationOnClickListener { finish() }
         setSupportActionBar(toolbar)
+        // 注意：必须在 setSupportActionBar 之后设置，否则会被内部监听覆盖
+        toolbar.setNavigationOnClickListener { exitToMain() }
 
         findViewById<MaterialButton>(R.id.btn_refresh).setOnClickListener {
             webView.reload()
@@ -124,6 +128,12 @@ class ConnectActivity : AppCompatActivity() {
         }
     }
 
+    /** 主动退出连接：清除"最后连接"记忆并返回列表。 */
+    private fun exitToMain() {
+        store.saveLastConnection(null)
+        finish()
+    }
+
     /** 切后台暂停渲染省电；返回时恢复。 */
     override fun onPause() {
         super.onPause()
@@ -146,6 +156,7 @@ class ConnectActivity : AppCompatActivity() {
             true
         }
         R.id.action_change_link -> {
+            store.saveLastConnection(null)
             startActivity(Intent(this, AddLinkActivity::class.java))
             finish()
             true

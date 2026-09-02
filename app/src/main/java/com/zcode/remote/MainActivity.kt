@@ -29,8 +29,19 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         store = ConnectionsStore(this)
+
+        // 恢复了上次的连接页：App 重启（含从最近任务划掉后重新进入）直接回到工作画面，
+        // 而不是停在连接列表。用户主动退出连接页时此记录已被清除。
+        val lastId = store.lastConnectionId()
+        if (lastId != null && store.get(lastId) != null) {
+            startActivity(
+                Intent(this, ConnectActivity::class.java)
+                    .putExtra(ConnectActivity.EXTRA_ID, lastId)
+            )
+        }
+
+        setContentView(R.layout.activity_main)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
