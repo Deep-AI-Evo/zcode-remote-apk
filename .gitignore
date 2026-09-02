@@ -22,3 +22,6 @@ captures/
 
 # Local test screenshots (kept out of the repo; representative ones live in docs/screenshots)
 gui-test-screenshots/
+
+# Release signing keystore (machine-private)
+keystore/

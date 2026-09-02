@@ -99,8 +99,8 @@ app/src/main/java/com/zcode/remote/
 
 ## 路线图 / Roadmap
 
+- [x] Release 签名包 / Signed release builds（v1.0.0，见 [Releases](../../releases)）
 - [ ] **真·免扫码 / True QR-free**：Mac 常驻小助手自动获取最新远程链接，App 打开即连（需要 ZCode 提供可编程取链接通道，待验证）
-- [ ] Release 签名包 / Signed release builds
 - [ ] 更多连接字段（备注名、图标）/ Richer connection profiles
 
 ## 免责声明 / Disclaimer

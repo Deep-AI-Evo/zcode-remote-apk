@@ -4,11 +4,8 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <group
-        android:translateX="30"
-        android:translateY="30">
-        <path
-            android:fillColor="#FFFFFFFF"
-            android:pathData="M8,7H16V9.2L11.6,14.8H16V17H8V14.8L12.4,9.2H8V7Z" />
-    </group>
+    <!-- 粗体 Z：直接以绝对坐标绘制在 108 视口中心 -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M34,33 H74 V37 L40,71 H74 V75 H34 V71 L68,37 H34 Z" />
 </vector>
