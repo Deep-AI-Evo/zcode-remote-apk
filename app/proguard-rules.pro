@@ -1,0 +1,1 @@
+# Keep ZXing classes (they are already consumer-proguard-optimized by the library).

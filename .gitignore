@@ -1,0 +1,24 @@
+# Gradle
+.gradle/
+build/
+.kotlin/
+
+# Local configuration (machine-specific)
+local.properties
+
+# IDE
+.idea/
+*.iml
+captures/
+.externalNativeBuild/
+.cxx/
+
+# OS
+.DS_Store
+
+# Build artifacts
+*.apk
+*.aab
+
+# Local test screenshots (kept out of the repo; representative ones live in docs/screenshots)
+gui-test-screenshots/

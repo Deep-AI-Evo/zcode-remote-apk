@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ZCode 远程</string>
+    <string name="main_empty">还没有连接\n点右下角 ＋ 添加第一个连接</string>
+    <string name="fab_add">添加连接</string>
+    <string name="add_title">添加连接</string>
+    <string name="add_hint">在电脑端 ZCode 打开「手机连接」，把二维码里的链接复制或扫进来，之后一键连。</string>
+    <string name="add_link_label">连接链接</string>
+    <string name="add_link_hint">粘贴链接：https://…</string>
+    <string name="btn_save">保存连接</string>
+    <string name="or_divider">— 或 —</string>
+    <string name="btn_scan">扫码添加</string>
+    <string name="err_invalid_link">链接格式不正确，应以 http(s):// 开头</string>
+    <string name="saved_ok">已保存连接</string>
+    <string name="menu_refresh">刷新</string>
+    <string name="menu_open_browser">在浏览器打开</string>
+    <string name="menu_change_link">更换链接</string>
+    <string name="menu_copy_link">复制链接</string>
+    <string name="menu_delete">删除</string>
+    <string name="copied">链接已复制</string>
+    <string name="deleted">已删除：%1$s</string>
+    <string name="scan_prompt">对准电脑屏幕上 ZCode 的二维码</string>
+    <string name="load_failed">页面加载失败：网络异常或链接已失效，可点刷新；也可返回更换链接</string>
+    <string name="connect_loading">连接中…</string>
+    <string name="confirm_delete">删除这条连接？</string>
+    <string name="cancel">取消</string>
+    <string name="delete">删除</string>
+    <string name="title_connect">远程连接</string>
+</resources>
